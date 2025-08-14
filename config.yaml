@@ -1,7 +1,7 @@
 site:
   title: "Daily Signal"
   description: "Automated daily digest from public-domain/open sources."
-  base_url: "https://aidieselprof.github.io/daily-signal/"
+  base_url: "https://aidieselprof.github.io/daily-signal"
   timezone: "America/Vancouver"
   cname: ""
 
