@@ -1,3 +1,114 @@
-```html
-<!doctype html><html><head><meta charset="utf-8"><meta name=viewport content="width=device-width,initial-scale=1"><title>{{ site.title }}</title>{% if site.google_site_verification %}<meta name="google-site-verification" content="{{ site.google_site_verification }}">{% endif %}{% if site.bing_site_verification %}<meta name="msvalidate.01" content="{{ site.bing_site_verification }}">{% endif %}<link rel=alternate type=application/rss+xml title="{{ site.title }} RSS" href=feed.xml><style>body{font-family:system-ui;background:#0b0d10;color:#e8eaed;margin:0}.wrap{max-width:900px;margin:0 auto;padding:16px}.header{background:#0f1216;border-bottom:1px solid #1f2329;padding:24px 16px}.card{background:#12161c;border:1px solid #1f2329;border-radius:16px;padding:16px;margin:16px 0}.thumb{width:100%;max-height:360px;object-fit:cover;border-radius:12px;border:1px solid #1f2329}.support{display:inline-block;margin:12px 0;padding:10px 14px;border-radius:10px;border:1px solid #2a2f36}.ad{margin:16px 0}</style></head><body><div class=header><div class=wrap><h1>{{ site.title }}</h1><a href=feed.xml>RSS</a></div></div><div class=wrap>{% if monetization.tip_url %}<a class=support href="{{ monetization.tip_url }}" target=_blank>☕ Support</a>{% endif %}{% if monetization.ad_snippet %}<div class=ad>{{ monetization.ad_snippet | safe }}</div>{% endif %}{% for p in posts %}<div class=card><h2><a href="{{ p.filename }}">{{ p.title }}</a></h2>{% if p.image %}<img class=thumb src="{{ p.image }}" alt="">{% endif %}<p>{{ p.summary[:300] }}{% if p.summary|length>300 %}…{% endif %}</p><p><small>Source: {{ p.source }} — License: {{ p.license }}</small></p></div>{% endfor %}</div></body></html><!-- redeploy 2025-08-14T07:02:45 -->
-```
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name=viewport content="width=device-width,initial-scale=1">
+  <title>{{ site.title }}</title>
+  <meta name="description" content="{{ site.description }}">
+  {% if site.google_site_verification %}<meta name="google-site-verification" content="{{ site.google_site_verification }}">{% endif %}
+  {% if site.bing_site_verification %}<meta name="msvalidate.01" content="{{ site.bing_site_verification }}">{% endif %}
+  <link rel="alternate" type="application/rss+xml" title="{{ site.title }} RSS" href="feed.xml">
+  <link rel="canonical" href="{{ site.base_url }}">
+  <meta property="og:title" content="{{ site.title }}">
+  <meta property="og:description" content="{{ site.description }}">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="{{ site.base_url }}">
+  <style>
+    :root{
+      --bg:#0b0d10;--fg:#e8eaed;--muted:#9aa0a6;
+      --card:#0f1216;--border:#1f2329;--accent:#7dd3fc;
+    }
+    @media (prefers-color-scheme: light){
+      :root{--bg:#ffffff;--fg:#0b1220;--muted:#52607a;--card:#f7f8fb;--border:#e6e8ee;--accent:#2563eb;}
+      .thumb{border-color:#dde2ea}
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0}
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--fg)}
+    .container{max-width:1080px;margin:0 auto;padding:20px}
+    .header{
+      background:linear-gradient(180deg, rgba(125,211,252,.10), transparent 60%), var(--bg);
+      border-bottom:1px solid var(--border);
+    }
+    .brand{display:flex;align-items:center;gap:12px}
+    .brand svg{width:28px;height:28px}
+    .nav{display:flex;gap:16px;align-items:center}
+    .nav a{color:var(--fg);opacity:.9;text-decoration:none}
+    .nav a:hover{text-decoration:underline}
+    .topbar{display:flex;justify-content:space-between;align-items:center;padding:18px 0}
+    .support-btn{
+      display:inline-block;padding:10px 14px;border-radius:10px;border:1px solid var(--border);
+      text-decoration:none;color:var(--fg);opacity:.95
+    }
+    .support-btn:hover{opacity:1}
+    .sponsor{background:var(--card);border:1px dashed var(--border);border-radius:12px;padding:12px 14px;margin:14px 0;opacity:.95}
+    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+    .card{
+      grid-column:span 12;
+      background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px;
+      transition:transform .12s ease, box-shadow .12s ease
+    }
+    .card:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.18)}
+    @media (min-width:760px){ .card{grid-column:span 6} }
+    @media (min-width:1024px){ .card{grid-column:span 4} }
+    h1,h2{margin:8px 0 6px}
+    .thumb{width:100%;max-height:260px;object-fit:cover;border-radius:12px;border:1px solid var(--border)}
+    .meta{font-size:.9rem;color:var(--muted)}
+    .footer{border-top:1px solid var(--border);margin-top:24px;padding:20px 0;color:var(--muted);display:flex;gap:16px;flex-wrap:wrap}
+    .ad{margin:16px 0}
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container topbar">
+      <div class="brand">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <circle cx="12" cy="12" r="10" stroke="currentColor" opacity=".2"/>
+          <path d="M4 13c4 0 6-6 8-6s4 6 8 6" stroke="currentColor" />
+        </svg>
+        <div>
+          <div style="font-weight:700;font-size:1.15rem">{{ site.title }}</div>
+          <div class="meta" style="margin-top:2px">{{ site.description }}</div>
+        </div>
+      </div>
+      <nav class="nav">
+        <a href="feed.xml">RSS</a>
+        <a href="terms.html">Terms</a>
+        <a href="privacy.html">Privacy</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    {% if site.sponsor and site.sponsor.enabled and site.sponsor.html %}
+      <div class="sponsor">{{ site.sponsor.html | safe }}</div>
+    {% endif %}
+
+    {% if monetization.tip_url %}
+      <a class="support-btn" href="{{ monetization.tip_url }}" target="_blank" rel="noopener">☕ Support this site</a>
+    {% endif %}
+
+    {% if monetization.ad_snippet %}
+      <div class="ad">{{ monetization.ad_snippet | safe }}</div>
+    {% endif %}
+
+    <section class="grid">
+      {% for p in posts %}
+      <article class="card">
+        <h2><a style="color:inherit;text-decoration:none" href="{{ p.filename }}">{{ p.title }}</a></h2>
+        {% if p.image %}<img class="thumb" src="{{ p.image }}" alt="">{% endif %}
+        <p style="margin:10px 0 8px">{{ p.summary[:220] }}{% if p.summary|length > 220 %}…{% endif %}</p>
+        <div class="meta">Source: {{ p.source }} — License: {{ p.license }}</div>
+      </article>
+      {% endfor %}
+    </section>
+
+    <footer class="footer">
+      <span>© {{ site.title }}</span>
+      <a href="feed.xml">RSS</a>
+      <a href="terms.html">Terms</a>
+      <a href="privacy.html">Privacy</a>
+    </footer>
+  </main>
+</body>
+</html>
