@@ -6,8 +6,17 @@ site:
   cname: ""
 
 monetization:
-  tip_url: "Ko-fi.com/dailysignal"
-  ad_snippet: ""
+  tip_url: "https://ko-fi.com/dailysignal"   # keep this too if you want the button
+  ad_snippet: |-
+    <script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
+    <script>
+      kofiWidgetOverlay.draw('dailysignal', {
+        'type': 'floating-chat',
+        'floating-chat.donateButton.text': 'Support me',
+        'floating-chat.donateButton.background-color': '#00b9fe',
+        'floating-chat.donateButton.text-color': '#fff'
+      });
+    </script>
 
 email:
   enabled: false
