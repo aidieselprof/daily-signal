@@ -1,0 +1,85 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name=viewport content="width=device-width,initial-scale=1">
+  <title>{{ page.title }} — {{ site.title }}</title>
+  <meta name="description" content="{{ site.description }}">
+  {% if site.google_site_verification %}<meta name="google-site-verification" content="{{ site.google_site_verification }}">{% endif %}
+  {% if site.bing_site_verification %}<meta name="msvalidate.01" content="{{ site.bing_site_verification }}">{% endif %}
+  <link rel="canonical" href="{{ site.base_url.rstrip('/') ~ '/' ~ page.slug ~ '.html' }}">
+  <style>
+    :root{--bg:#0b0d10;--fg:#e8eaed;--muted:#9aa0a6;--card:#0f1216;--border:#1f2329}
+    @media (prefers-color-scheme: light){:root{--bg:#ffffff;--fg:#0b1220;--muted:#52607a;--card:#f7f8fb;--border:#e6e8ee}}
+    *{box-sizing:border-box}html,body{margin:0;padding:0}
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--fg)}
+    .container{max-width:980px;margin:0 auto;padding:20px}
+    .header{border-bottom:1px solid var(--border)}
+    .topbar{display:flex;justify-content:space-between;align-items:center;padding:16px 0}
+    .meta{color:var(--muted)}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;margin:16px 0}
+    img{width:100%;border:1px solid var(--border);border-radius:10px}
+    pre{white-space:pre-wrap;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px}
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container topbar">
+      <a href="index.html" style="text-decoration:none;font-weight:700">{{ site.title }}</a>
+      <nav style="display:flex;gap:16px">
+        <a href="feed.xml">RSS</a>
+        <a href="terms.html">Terms</a>
+        <a href="privacy.html">Privacy</a>
+        <a href="aurora.html">Aurora</a>
+        <a href="earthquakes-bc.html">Earthquakes (BC)</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <h1 style="margin:14px 0 6px">{{ page.title }}</h1>
+
+    {% if page.context.kind == 'aurora' %}
+      <div class="card">
+        <h2 style="margin:0 0 6px">Kp Index (latest)</h2>
+        <div style="font-size:2.2rem;font-weight:700">{{ page.context.aurora.kp_now or "—" }}</div>
+        <div class="meta">Source: NOAA SWPC</div>
+      </div>
+      <div class="card">
+        <h2 style="margin:0 0 6px">3-Day Geomagnetic Forecast</h2>
+        <pre>{{ page.context.aurora.forecast_text }}</pre>
+      </div>
+      <div class="card">
+        <h2 style="margin:0 0 6px">Aurora Oval (Nowcast)</h2>
+        <img src="{{ page.context.aurora.images.nh }}" alt="Aurora forecast, Northern Hemisphere">
+        <img src="{{ page.context.aurora.images.sh }}" alt="Aurora forecast, Southern Hemisphere" style="margin-top:10px">
+        <div class="meta" style="margin-top:8px">Images courtesy of NOAA SWPC.</div>
+      </div>
+    {% endif %}
+
+    {% if page.context.kind == 'quakes' %}
+      <div class="card">
+        <h2 style="margin:0 0 6px">Past 7 Days — {{ page.context.region }}</h2>
+        {% if page.context.quakes and page.context.quakes|length > 0 %}
+          <ul>
+          {% for q in page.context.quakes %}
+            <li>
+              <strong>M{{ q.mag }}</strong> — {{ q.place }} —
+              <span class="meta">{{ q.time }}</span> —
+              <a href="{{ q.url }}" target="_blank" rel="noopener">USGS</a>
+            </li>
+          {% endfor %}
+          </ul>
+        {% else %}
+          <p>No M3.0+ events in the last 7 days for this region.</p>
+        {% endif %}
+        <div class="meta">Data from USGS.</div>
+      </div>
+    {% endif %}
+
+    {% if monetization.tip_url %}
+      <p><a href="{{ monetization.tip_url }}" target="_blank" rel="noopener">☕ Support this site</a></p>
+    {% endif %}
+  </main>
+</body>
+</html>

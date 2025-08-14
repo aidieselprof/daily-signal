@@ -1,4 +1,4 @@
-name: Build & Deploy — Daily
+﻿name: Build & Deploy — Daily
 
 on:
   schedule:
@@ -39,7 +39,6 @@ jobs:
       - id: deployment
         uses: actions/deploy-pages@v4
 
-  # NEW: after Pages is live, ping Google & Bing with your sitemap
   ping:
     runs-on: ubuntu-latest
     needs: deploy
