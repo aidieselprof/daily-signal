@@ -1,13 +1,14 @@
 site:
-  "jcC0oX1CyN4oBwXFX3EiYJJcWGaY-KOLp4O72nV9L3M"
   title: "Daily Signal"
   description: "Automated daily digest from public-domain/open sources."
   base_url: "https://aidieselprof.github.io/daily-signal"
   timezone: "America/Vancouver"
   cname: ""
+  google_site_verification: ""
+  bing_site_verification: ""
 
 monetization:
-  tip_url: "https://ko-fi.com/dailysignal"   # keep this too if you want the button
+  tip_url: "https://ko-fi.com/dailysignal"
   ad_snippet: |-
     <script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
     <script>
