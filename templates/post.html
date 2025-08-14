@@ -4,7 +4,6 @@
   <meta charset="utf-8">
   <meta name=viewport content="width=device-width,initial-scale=1">
   <title>{{ post.title }} — {{ site.title }}</title>
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='7' fill='none' stroke='%237dd3fc'/%3E%3Cpath d='M2 9c3 0 4.5-4 6-4s3 4 6 4' stroke='%237dd3fc' fill='none'/%3E%3C/svg%3E">
   <meta name="description" content="{{ (post.summary[:160] if post.summary else site.description) }}">
   {% if site.google_site_verification %}<meta name="google-site-verification" content="{{ site.google_site_verification }}">{% endif %}
   {% if site.bing_site_verification %}<meta name="msvalidate.01" content="{{ site.bing_site_verification }}">{% endif %}
@@ -16,9 +15,7 @@
   {% if post.image %}<meta property="og:image" content="{{ post.image }}">{% endif %}
   <style>
     :root{--bg:#0b0d10;--fg:#e8eaed;--muted:#9aa0a6;--card:#0f1216;--border:#1f2329;--accent:#7dd3fc}
-    @media (prefers-color-scheme: light){
-      :root{--bg:#ffffff;--fg:#0b1220;--muted:#52607a;--card:#f7f8fb;--border:#e6e8ee;--accent:#2563eb}
-    }
+    @media (prefers-color-scheme: light){:root{--bg:#ffffff;--fg:#0b1220;--muted:#52607a;--card:#f7f8fb;--border:#e6e8ee;--accent:#2563eb}}
     *{box-sizing:border-box}html,body{margin:0;padding:0}
     body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--fg)}
     .container{max-width:820px;margin:0 auto;padding:20px}
@@ -30,6 +27,8 @@
     .support-btn{display:inline-block;margin:12px 0;padding:10px 14px;border-radius:10px;border:1px solid var(--border);text-decoration:none;color:var(--fg)}
     .ad{margin:16px 0}
     .footer{border-top:1px solid var(--border);margin-top:24px;padding:20px 0;color:var(--muted)}
+    .share{display:flex;gap:12px;align-items:center;margin:10px 0 6px;flex-wrap:wrap}
+    .btn{display:inline-block;padding:8px 12px;border:1px solid var(--border);border-radius:10px;text-decoration:none;color:inherit}
   </style>
 </head>
 <body>
@@ -38,11 +37,17 @@
       <div style="display:flex;align-items:center;gap:10px">
         <a href="index.html" style="text-decoration:none;font-weight:700">{{ site.title }}</a>
       </div>
-      <nav style="display:flex;gap:16px">
+      <nav style="display:flex;gap:16px;flex-wrap:wrap">
         <a href="feed.xml">RSS</a>
+        <a href="aurora.html">Aurora</a>
+        <a href="earthquakes-bc.html">BC Quakes</a>
+        <a href="earthquakes-alaska.html">AK Quakes</a>
+        <a href="earthquakes-california.html">CA Quakes</a>
+        <a href="earthquakes-japan.html">Japan Quakes</a>
+        <a href="resources.html">Resources</a>
         <a href="terms.html">Terms</a>
         <a href="privacy.html">Privacy</a>
-      <a href="aurora.html">Aurora</a><a href="earthquakes-bc.html">Earthquakes (BC)</a></nav>
+      </nav>
     </div>
   </header>
 
@@ -59,6 +64,27 @@
       <div class="ad">{{ monetization.ad_snippet | safe }}</div>
     {% endif %}
 
+    <!-- Share buttons -->
+    <div class="share" id="share" data-url="{{ site.base_url.rstrip('/') ~ '/' ~ post.filename }}" data-text="{{ post.title }} — {{ site.title }}">
+      <a class="btn" id="share-x" href="#" target="_blank" rel="noopener">Share on X</a>
+      <a class="btn" id="share-bsky" href="#" target="_blank" rel="noopener">Share on Bluesky</a>
+      <button class="btn" id="copy-link" type="button">Copy link</button>
+    </div>
+    <script>
+      (function(){
+        var el = document.getElementById('share');
+        if(!el) return;
+        var url = el.getAttribute('data-url');
+        var text = el.getAttribute('data-text');
+        var x = document.getElementById('share-x');
+        var b = document.getElementById('share-bsky');
+        if(x) x.href = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(text) + '&url=' + encodeURIComponent(url);
+        if(b) b.href = 'https://bsky.app/intent/compose?text=' + encodeURIComponent(text + ' ' + url);
+        var c = document.getElementById('copy-link');
+        if(c) c.onclick = function(){ navigator.clipboard && navigator.clipboard.writeText(url).then(function(){ c.textContent='Copied!'; }); };
+      })();
+    </script>
+
     <p class="meta">{{ post.attribution }}</p>
     <p><a href="index.html">← Back to Daily Signal</a></p>
 
@@ -68,5 +94,3 @@
   </main>
 </body>
 </html>
-
-

@@ -20,18 +20,25 @@
     .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;margin:16px 0}
     img{width:100%;border:1px solid var(--border);border-radius:10px}
     pre{white-space:pre-wrap;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:12px}
+    ul.clean{list-style:none;padding-left:0}
+    ul.clean li{padding:8px 0;border-bottom:1px dashed var(--border)}
+    a.btn{display:inline-block;margin:8px 0;padding:8px 12px;border:1px solid var(--border);border-radius:10px;text-decoration:none;color:inherit}
   </style>
 </head>
 <body>
   <header class="header">
     <div class="container topbar">
       <a href="index.html" style="text-decoration:none;font-weight:700">{{ site.title }}</a>
-      <nav style="display:flex;gap:16px">
+      <nav style="display:flex;gap:16px;flex-wrap:wrap">
         <a href="feed.xml">RSS</a>
+        <a href="aurora.html">Aurora</a>
+        <a href="earthquakes-bc.html">BC Quakes</a>
+        <a href="earthquakes-alaska.html">AK Quakes</a>
+        <a href="earthquakes-california.html">CA Quakes</a>
+        <a href="earthquakes-japan.html">Japan Quakes</a>
+        <a href="resources.html">Resources</a>
         <a href="terms.html">Terms</a>
         <a href="privacy.html">Privacy</a>
-        <a href="aurora.html">Aurora</a>
-        <a href="earthquakes-bc.html">Earthquakes (BC)</a>
       </nav>
     </div>
   </header>
@@ -59,26 +66,34 @@
 
     {% if page.context.kind == 'quakes' %}
       <div class="card">
-        <h2 style="margin:0 0 6px">Past 7 Days — {{ page.context.region }}</h2>
+        {% if page.context.region %}<h2 style="margin:0 0 6px">Past 7 Days — {{ page.context.region }}</h2>{% endif %}
         {% if page.context.quakes and page.context.quakes|length > 0 %}
-          <ul>
+          <ul class="clean">
           {% for q in page.context.quakes %}
-            <li>
-              <strong>M{{ q.mag }}</strong> — {{ q.place }} —
-              <span class="meta">{{ q.time }}</span> —
-              <a href="{{ q.url }}" target="_blank" rel="noopener">USGS</a>
-            </li>
+            <li><strong>M{{ q.mag }}</strong> — {{ q.place }} — <span class="meta">{{ q.time }}</span> — <a class="btn" href="{{ q.url }}" target="_blank" rel="noopener">USGS</a></li>
           {% endfor %}
           </ul>
         {% else %}
-          <p>No M3.0+ events in the last 7 days for this region.</p>
+          <p>No qualifying events in the last 7 days for this region.</p>
         {% endif %}
-        <div class="meta">Data from USGS.</div>
+        <div class="meta">Data: USGS.</div>
+      </div>
+    {% endif %}
+
+    {% if page.context.kind == 'resources' %}
+      <div class="card">
+        <h2 style="margin:0 0 6px">Curated Resources</h2>
+        <ul class="clean">
+          {% for r in page.context.items %}
+            <li><a href="{{ r.url }}" target="_blank" rel="noopener">{{ r.title }}</a>{% if r.note %} — <span class="meta">{{ r.note }}</span>{% endif %}</li>
+          {% endfor %}
+        </ul>
+        <div class="meta">Some links can be affiliate links. Replace AFFID with your tag where applicable.</div>
       </div>
     {% endif %}
 
     {% if monetization.tip_url %}
-      <p><a href="{{ monetization.tip_url }}" target="_blank" rel="noopener">☕ Support this site</a></p>
+      <p><a class="btn" href="{{ monetization.tip_url }}" target="_blank" rel="noopener">☕ Support this site</a></p>
     {% endif %}
   </main>
 </body>

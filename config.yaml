@@ -35,3 +35,16 @@ sources:
   usgs_quakes: true
   noaa_space: true
   on_this_day: true
+resources:
+  - title: "Aurora Forecast Map"
+    url: "https://www.swpc.noaa.gov/products/aurora-30-minute-forecast"
+    note: "Official NOAA nowcast"
+  - title: "Emergency Quake Kit"
+    url: "https://www.amazon.com/dp/B0B5H7QK1F?tag=AFFID"
+    note: "Replace AFFID with your Amazon tag"
+  - title: "Beginner’s Stargazing Book"
+    url: "https://www.amazon.com/dp/1615194799?tag=AFFID"
+    note: "Swap AFFID for your tag"
+  - title: "USGS Latest Earthquakes"
+    url: "https://earthquake.usgs.gov/earthquakes/map/"
+    note: "Live map (official)"
