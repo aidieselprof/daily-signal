@@ -47,17 +47,15 @@ def resources_page(cfg):
     items = cfg.get("resources", [])
     if not items:
         items = [
-            {"title":"Aurora Forecast Map", "url":"https://www.swpc.noaa.gov/products/aurora-30-minute-forecast", "note":"Official NOAA nowcast (free)"},
-            {"title":"Emergency Quake Kit", "url":"https://www.amazon.com/dp/B0B5H7QK1F?tag=AFFID", "note":"Swap AFFID for your Amazon tag"},
-            {"title":"Astronomy Picture of the Day Prints", "url":"https://apod.nasa.gov/apod/lib/about_apod.html", "note":"Learn about APOD (prints via credited sources)"},
-            {"title":"Beginner’s Stargazing Book", "url":"https://www.amazon.com/dp/1615194799?tag=AFFID", "note":"Replace AFFID with your tag"},
-            {"title":"USGS Latest Earthquakes", "url":"https://earthquake.usgs.gov/earthquakes/map/", "note":"Official live map"}
+            {"title":"Aurora Forecast Map", "url":"https://www.swpc.noaa.gov/products/aurora-30-minute-forecast", "note":"Official NOAA nowcast"},
+            {"title":"Emergency Quake Kit", "url":"https://www.amazon.com/dp/B0B5H7QK1F?tag=AFFID", "note":"Replace AFFID with your Amazon tag"},
+            {"title":"Beginner’s Stargazing Book", "url":"https://www.amazon.com/dp/1615194799?tag=AFFID", "note":"Swap AFFID with your tag"},
+            {"title":"USGS Latest Earthquakes", "url":"https://earthquake.usgs.gov/earthquakes/map/", "note":"Live official map"}
         ]
     return {"slug":"resources","title":"Resources (Affiliate-ready)","template":"page.html","context":{"kind":"resources","items":items}}
 
 def build_all(cfg):
     pages = [aurora_page()]
-    # Regions: BC, Alaska, California, Japan
     pages += [
         quakes_region_page("earthquakes-bc", "Earthquakes — British Columbia (Last 7 Days)", (48,62,-141,-114)),
         quakes_region_page("earthquakes-alaska", "Earthquakes — Alaska (Last 7 Days)", (51,72,-170,-129)),
