@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name=viewport content="width=device-width,initial-scale=1">
   <title>{{ post.title }} — {{ site.title }}</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='7' fill='none' stroke='%237dd3fc'/%3E%3Cpath d='M2 9c3 0 4.5-4 6-4s3 4 6 4' stroke='%237dd3fc' fill='none'/%3E%3C/svg%3E">
   <meta name="description" content="{{ (post.summary[:160] if post.summary else site.description) }}">
   {% if site.google_site_verification %}<meta name="google-site-verification" content="{{ site.google_site_verification }}">{% endif %}
   {% if site.bing_site_verification %}<meta name="msvalidate.01" content="{{ site.bing_site_verification }}">{% endif %}
@@ -67,3 +68,4 @@
   </main>
 </body>
 </html>
+
