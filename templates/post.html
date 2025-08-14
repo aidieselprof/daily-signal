@@ -12,7 +12,7 @@
   <meta property="og:description" content="{{ (post.summary[:180] if post.summary else site.description) }}">
   <meta property="og:type" content="article">
   <meta property="og:url" content="{{ site.base_url.rstrip('/') ~ '/' ~ post.filename }}">
-  {% if post.image %}<meta property="og:image" content="{{ post.image }}">{% endif %}
+  {% if post.image %}<meta property="og:image" content="{{ site.base_url.rstrip('/') ~ '/' ~ post.image }}">{% endif %}
   <style>
     :root{--bg:#0b0d10;--fg:#e8eaed;--muted:#9aa0a6;--card:#0f1216;--border:#1f2329;--accent:#7dd3fc}
     @media (prefers-color-scheme: light){:root{--bg:#ffffff;--fg:#0b1220;--muted:#52607a;--card:#f7f8fb;--border:#e6e8ee;--accent:#2563eb}}
@@ -94,3 +94,4 @@
   </main>
 </body>
 </html>
+
