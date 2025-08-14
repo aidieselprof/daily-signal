@@ -84,7 +84,7 @@
       <div class="card">
         <h2 style="margin:0 0 6px">Curated Resources</h2>
         <ul class="clean">
-          {% for r in page.context.items %}
+          {% for r in page.context['items'] %}
             <li><a href="{{ r.url }}" target="_blank" rel="noopener">{{ r.title }}</a>{% if r.note %} — <span class="meta">{{ r.note }}</span>{% endif %}</li>
           {% endfor %}
         </ul>
@@ -98,3 +98,4 @@
   </main>
 </body>
 </html>
+
